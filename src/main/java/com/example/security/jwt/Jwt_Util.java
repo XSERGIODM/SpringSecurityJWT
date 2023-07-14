@@ -21,9 +21,9 @@ import java.util.function.Function;
 public class Jwt_Util {
 
     @Value("${jwt.secret.key}")
-    String secretKey;
+    public String secretKey;
     @Value("${jwt.time.expiration}")
-    String timeExpiration;
+    public String timeExpiration;
 
 
     //generar un token de acceso
@@ -32,7 +32,7 @@ public class Jwt_Util {
                 .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(timeExpiration)))
-                .signWith(getSignatureKey(), SignatureAlgorithm.ES256)
+                .signWith(getSignatureKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
