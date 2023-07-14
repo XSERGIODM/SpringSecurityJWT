@@ -1,6 +1,7 @@
 package com.example.security;
 
 import com.example.security.filters.Filter_JwtAuthentication;
+import com.example.security.filters.Filter_JwtAuthorization;
 import com.example.security.jwt.Jwt_Util;
 import com.example.services.Service_UserDetailsImpl;
 import lombok.AccessLevel;
@@ -17,6 +18,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -26,6 +28,7 @@ public class Security_Config {
 
     Service_UserDetailsImpl userDetails;
     Jwt_Util jwtUtil;
+    Filter_JwtAuthorization filterJwtAuthorization;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, AuthenticationManager manager) throws Exception {
@@ -43,6 +46,7 @@ public class Security_Config {
                 })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilter(filterJwtAuthentication)
+                .addFilterBefore(filterJwtAuthorization, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 

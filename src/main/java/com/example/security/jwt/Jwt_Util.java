@@ -21,9 +21,9 @@ import java.util.function.Function;
 public class Jwt_Util {
 
     @Value("${jwt.secret.key}")
-    public String secretKey;
+    String secretKey;
     @Value("${jwt.time.expiration}")
-    public String timeExpiration;
+    String timeExpiration;
 
 
     //generar un token de acceso
